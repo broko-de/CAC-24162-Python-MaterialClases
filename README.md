@@ -16,13 +16,13 @@ Si ya tienes instalado git en tu sistema operativo (Windows,Linux, Mac Os) puede
 
 ```bash
 cd  /directorio_descarga
-git clone https://github.com/broko-de/CAC-23524-Python-MaterialClases
+git clone https://github.com/broko-de/CAC-24162-Python-MaterialClases
 ```
 Posteriormente a medida que avancemos con la cursada solo tendrías que mantener actualizado el repositorio realizando las descargas de los cambios que vaya subiendo.
 
 ```bash
 # Ubicados dentro del directorio del repositorio por ejemplo 
-# /directorio_descarga/CAC-23319-Django-MaterialClases
+# /directorio_descarga/CAC-24162-Python-MaterialClases
 git pull
 ```
 Nos vemos en clases! 🐍
