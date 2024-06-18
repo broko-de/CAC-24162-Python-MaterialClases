@@ -1,8 +1,11 @@
 from flask import Flask
+from app.database import init_app
 from app.views import *
 
 #Crear una instancia de Flask
 app = Flask(__name__)
+
+init_app(app)
 
 #asociacion de rutas con vistas
 app.route('/',methods=['GET'])(index)

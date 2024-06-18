@@ -1,11 +1,28 @@
+from app.database import get_db
+
 class Movie:
-    def __init__(self):
-        self.id_movie
-        self.title
-        self.director
-        self.release_date
-        self.banner
-    
+    #CONSTRUCTOR
+    def __init__(self,id_movie=None,title=None,director=None,release_date=None,banner=None):
+        self.id_movie = id_movie
+        self.title = title
+        self.director = director
+        self.release_date = release_date
+        self.banner = banner
+
+    @staticmethod    
+    def get_all():
+        db = get_db()
+        cursor = db.cursor()
+        cursor.execute("SELECT * FROM movies")
+        rows = cursor.fetchall()
+        movies = [Movie(id_movie=row[0], title=row[1], director=row[2], release_date=row[3], banner=row[4]) for row in rows]
+        # movies = []
+        # for row in rows:
+        #     new_movie =  Movie(row[0],row[1],row[2],row[3],row[4])
+        #     movies.append(new_movie)
+        cursor.close()
+        return movies
+
     def save(self):
         #logica para INSERT/UPDATE en base datos
         pass
@@ -13,45 +30,14 @@ class Movie:
     def delete(self):
         #logica para hacer un DELETE en la BASE
         pass
-
-    def get_all(self):
-        #logica para traer todas las peliculas
-        pass
     
-movies = [
-    {
-        'id_movie':1,
-        'title':'Inception',
-        'director':'Christopher Nolan',
-        'release_date':'2010-07-16',
-        'banner':'inception_banner.jpg'
-    },
-    {
-        'id_movie':2,
-        'title':'The Godfather',
-        'director':'Francis Ford Coppola',
-        'release_date':'1972-03-24',
-        'banner':'godfather_banner.jpg'
-    },
-    {
-        'id_movie':3,
-        'title':'Forrest Gump',
-        'director':'Robert Zemeckis',
-        'release_date':'1994-07-06',
-        'banner':'forrestgump_banner.jpg'
-    },
-    {
-        'id_movie':4,
-        'title':'Titanic',
-        'director':'James Cameron',
-        'release_date':'1997-12-19',
-        'banner':'titanic_banner.jpg'
-    },
-    {
-        'id_movie':5,
-        'title':'Gladiator',
-        'director':'Ridley Scott',
-        'release_date':'2000-05-05',
-        'banner':'gladiator_banner.jpg'
-    }
-]
+    def serialize(self):
+        return {
+            'id_movie': self.id_movie,
+            'title': self.title,
+            'director': self.director,
+            'release_date': self.release_date,
+            'banner': self.banner,
+        }
+    
+    
