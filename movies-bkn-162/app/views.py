@@ -1,4 +1,4 @@
-from flask import jsonify
+from flask import jsonify, request
 from app.models import Movie
 
 def index():
@@ -12,14 +12,35 @@ def get_all_movies():
     return jsonify(list_movies)
 
 #funcion que busca una pelicula
-def get_movie():
-    pass
+def get_movie(movie_id):
+    movie = Movie.get_by_id(movie_id)
+    if not movie:
+        return jsonify({'message': 'Movie not found'}), 404
+    return jsonify(movie.serialize())
 
 def create_movie():
-    pass
+    data = request.json
+    #agregar una logica de validacion de datos
+    new_movie = Movie(None,data['title'],data['director'],data['release_date'],data['banner'])
+    new_movie.save()
+    return jsonify({'message':'Pelicula creada con exito'}), 201
+    
 
-def update_movie():
-    pass
+def update_movie(movie_id):
+    movie = Movie.get_by_id(movie_id)
+    if not movie:
+        return jsonify({'message': 'Movie not found'}), 404
+    data = request.json
+    movie.title = data['title']
+    movie.director = data['director']
+    movie.release_date = data['release_date']
+    movie.banner = data['banner']
+    movie.save()
+    return jsonify({'message': 'Movie updated successfully'})
 
-def delete_movie():
-    pass
+def delete_movie(movie_id):
+    movie = Movie.get_by_id(movie_id)
+    if not movie:
+        return jsonify({'message': 'Movie not found'}), 404
+    movie.delete()
+    return jsonify({'message': 'Movie deleted successfully'})
